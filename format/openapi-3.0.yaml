@@ -1,0 +1,89 @@
+# ============================================================================
+# REFERENSI FORMAT — OpenAPI 3.0.0
+#
+# Berkas ini hanya ACUAN struktur format. Seluruh data di bawah FIKTIF dan
+# tidak diambil dari folder example/. Ini menggambarkan bentuk output konverter
+# (Insomnia v5 -> OpenAPI 3.0) sekaligus input untuk arah sebaliknya
+# (OpenAPI 3.0 -> Insomnia v5).
+#
+# Catatan: environment dibawa dua arah — sub-environment di-resolve menjadi
+# `servers`, dan seluruh variabel (termasuk token) disimpan di ekstensi
+# `x-insomnia-environments`.
+# ============================================================================
+openapi: 3.0.0
+info:
+  title: Weather API
+  version: 1.0.0
+  description: "Dokumen OpenAPI fiktif untuk acuan format."
+servers:
+  - url: http://localhost:9000
+    description: Local
+  - url: https://api.weather.example.com
+    description: Production
+paths:
+  /forecast:
+    get:
+      summary: Get Forecast
+      description: "Prakiraan cuaca beberapa hari ke depan."
+      operationId: getForecast
+      tags:
+        - Weather
+      parameters:
+        - name: city
+          in: query
+          required: false
+          schema:
+            type: string
+          example: Yogyakarta
+        - name: days
+          in: query
+          required: false
+          schema:
+            type: string
+          example: "3"
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  /alerts:
+    post:
+      summary: Create Alert
+      description: "Buat langganan peringatan cuaca."
+      operationId: postAlerts
+      tags:
+        - Alerts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              city: Bandung
+              threshold_celsius: 35
+              channel: email
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+x-insomnia-environments:
+  Local:
+    base_url: http://localhost:9000
+    token: local-dummy-token-abc123
+  Production:
+    base_url: https://api.weather.example.com
+    token: prod-dummy-token-xyz789

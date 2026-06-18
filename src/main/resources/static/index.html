@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Format Converter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="bg-orbs" aria-hidden="true">
+    <span class="orb orb-a"></span>
+    <span class="orb orb-b"></span>
+</div>
+
+<main class="container">
+    <header class="hero">
+        <div class="logo">⇄</div>
+        <h1>Format Converter</h1>
+        <p class="subtitle">Impor file API-mu, proses di server, lalu unduh hasilnya. Mendukung banyak file sekaligus.</p>
+    </header>
+
+    <section class="card">
+        <form id="convert-form">
+            <!-- Drop zone -->
+            <label id="dropzone" for="file" class="dropzone">
+                <input type="file" id="file" name="file"
+                       accept=".yaml,.yml,.json" multiple hidden>
+                <div class="dz-icon">📁</div>
+                <div class="dz-text">
+                    <strong>Tarik &amp; lepas file di sini</strong>
+                    <span>atau <u>klik untuk memilih</u> &middot; .yaml, .yml, .json</span>
+                </div>
+            </label>
+
+            <div id="files-head" class="files-head" hidden>
+                <span id="files-count"></span>
+                <button type="button" id="clear-all" class="link-btn">Hapus semua</button>
+            </div>
+            <ul id="file-list" class="file-list"></ul>
+
+            <!-- Konversi dari → ke -->
+            <div class="convert-row">
+                <div class="field">
+                    <label for="source">Konversi dari</label>
+                    <div class="select-wrap">
+                        <select id="source" name="source"></select>
+                    </div>
+                </div>
+                <span class="arrow" aria-hidden="true">→</span>
+                <div class="field">
+                    <label for="target">ke</label>
+                    <div class="select-wrap">
+                        <select id="target" name="target"></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Format output</label>
+                <div class="segmented" id="output-seg">
+                    <input type="radio" name="output" id="out-yaml" value="yaml" checked>
+                    <label for="out-yaml">YAML</label>
+                    <input type="radio" name="output" id="out-json" value="json">
+                    <label for="out-json">JSON</label>
+                </div>
+            </div>
+
+            <button type="submit" id="submit-btn" class="primary" disabled>
+                <span class="btn-label">Konversi &amp; Unduh</span>
+            </button>
+        </form>
+
+        <div id="status" class="status" hidden></div>
+
+        <div id="result" class="result" hidden>
+            <div class="result-info">
+                <span class="result-icon">✓</span>
+                <div>
+                    <strong id="result-title"></strong>
+                    <small id="result-sub"></small>
+                </div>
+            </div>
+            <button type="button" id="download-btn" class="ghost">Unduh ulang</button>
+        </div>
+    </section>
+
+    <footer class="foot">
+        <span>Apache License 2.0</span>
+    </footer>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
