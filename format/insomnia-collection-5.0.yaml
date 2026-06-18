@@ -1,10 +1,13 @@
 # ============================================================================
-# REFERENSI FORMAT — Insomnia Collection v5
-#   type: collection.insomnia.rest/5.0  (juga didukung: spec.insomnia.rest/5.0)
+# REFERENSI FORMAT — Insomnia v5: Request Collection
+#   type: collection.insomnia.rest/5.0
+#
+# Salah satu dari DUA varian Insomnia v5 (lihat juga: insomnia-document-5.0.yaml
+# yang bertipe spec.insomnia.rest/5.0). Varian "collection" TIDAK punya blok
+# `spec:`; selebihnya strukturnya sama.
 #
 # Berkas ini hanya ACUAN struktur format. Seluruh data di bawah FIKTIF dan
-# tidak diambil dari folder example/. Silakan dipakai untuk memahami bentuk
-# input yang diterima konverter (Insomnia v5 -> OpenAPI 3.0).
+# tidak diambil dari folder example/.
 # ============================================================================
 type: collection.insomnia.rest/5.0
 schema_version: "5.1"

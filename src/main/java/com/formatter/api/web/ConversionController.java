@@ -20,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -32,6 +34,10 @@ import java.util.zip.ZipOutputStream;
 @RestController
 @RequestMapping("/api")
 public class ConversionController {
+
+    // Stempel waktu untuk nama arsip: tahun-bulan-tanggal-jam-menit-detik-ms.
+    private static final DateTimeFormatter ZIP_STAMP =
+            DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss-SSS");
 
     private final ConverterRegistry registry;
     private final SourceFormatDetector detector;
@@ -205,8 +211,10 @@ public class ConversionController {
             return badRequest("Semua file gagal dikonversi:\n" + String.join("\n", errors));
         }
 
+        String stamp = LocalDateTime.now().format(ZIP_STAMP);
+        String zipName = "converted-bundle-" + stamp + ".zip";
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"converted-bundle.zip\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + zipName + "\"")
                 .header(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.CONTENT_DISPOSITION)
                 .contentType(MediaType.parseMediaType("application/zip"))
                 .body(baos.toByteArray());

@@ -29,6 +29,19 @@ class InsomniaV5ToOpenApi3ConverterTest {
         return Files.readAllBytes(Path.of("example", "Va Guard.yaml"));
     }
 
+    private byte[] documentRef() throws Exception {
+        return Files.readAllBytes(Path.of("format", "insomnia-document-5.0.yaml"));
+    }
+
+    @Test
+    void convertsSpecDocumentVariant() throws Exception {
+        // varian spec.insomnia.rest/5.0 (punya blok spec:) harus tetap terkonversi
+        ConversionResult result = converter.convert(documentRef(), "insomnia-document-5.0.yaml", OutputType.YAML);
+        JsonNode root = yaml.readTree(result.content());
+        assertEquals("3.0.0", root.path("openapi").asText());
+        assertTrue(root.path("paths").size() > 0, "paths harus terbentuk dari koleksi");
+    }
+
     @Test
     void supportsInsomniaToOpenApi() {
         assertTrue(converter.supports(SourceFormat.INSOMNIA_V5, TargetFormat.OPENAPI_3_0));

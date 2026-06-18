@@ -32,16 +32,17 @@ Arsitektur dibuat **modular/extensible** — menambah pasangan format baru cukup
 
 ---
 
-## 📁 Folder `format/` (acuan format)
+## 📁 Folder `format/` (katalog acuan)
 
-Berisi contoh **referensi struktur** tiap format yang didukung, memakai **data fiktif** (bukan dari `example/`):
+Katalog **referensi struktur** tiap format, memakai **data fiktif** (bukan dari `example/`). Lihat [`format/README.md`](format/README.md) untuk panduan menambah format baru.
 
-| Berkas | Format |
-| --- | --- |
-| [`format/insomnia-5.0.yaml`](format/insomnia-5.0.yaml) | Insomnia Collection v5 (lengkap dengan `environments`) |
-| [`format/openapi-3.0.yaml`](format/openapi-3.0.yaml) | OpenAPI 3.0.0 (lengkap dengan `x-insomnia-environments`) |
+| Berkas | Format | `type` / penanda |
+| --- | --- | --- |
+| [`format/insomnia-collection-5.0.yaml`](format/insomnia-collection-5.0.yaml) | Insomnia v5 — Request Collection | `collection.insomnia.rest/5.0` |
+| [`format/insomnia-document-5.0.yaml`](format/insomnia-document-5.0.yaml) | Insomnia v5 — Design Document / API Spec | `spec.insomnia.rest/5.0` (punya blok `spec:`) |
+| [`format/openapi-3.0.yaml`](format/openapi-3.0.yaml) | OpenAPI 3.0.0 | `openapi: 3.0.0` |
 
-> Folder `example/` berisi file uji nyata; folder `format/` adalah template acuan berdata bebas.
+> Insomnia v5 punya dua varian (collection & document); keduanya berstruktur sama dan diperlakukan identik oleh konverter. Folder `example/` berisi file uji nyata; `format/` adalah template acuan berdata bebas.
 
 ---
 
@@ -84,7 +85,7 @@ Buka **http://localhost:8080**.
 2. Pilih **Konversi dari → ke** dan format output (YAML/JSON).
 3. Klik **Konversi & Unduh**.
    - 1 file → langsung terunduh.
-   - Beberapa file → terunduh sebagai `converted-bundle.zip`.
+   - Beberapa file → terunduh sebagai arsip ZIP bertimestamp, mis. `converted-bundle-20260618-105149-175.zip`.
 
 ---
 

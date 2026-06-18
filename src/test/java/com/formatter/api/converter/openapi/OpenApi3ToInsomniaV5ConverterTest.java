@@ -26,7 +26,7 @@ class OpenApi3ToInsomniaV5ConverterTest {
     }
 
     private byte[] insomniaRef() throws Exception {
-        return Files.readAllBytes(Path.of("format", "insomnia-5.0.yaml"));
+        return Files.readAllBytes(Path.of("format", "insomnia-collection-5.0.yaml"));
     }
 
     @Test
