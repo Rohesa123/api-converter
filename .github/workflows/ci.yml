@@ -1,0 +1,28 @@
+name: CI
+
+# Build + test selama pengembangan di main (centang hijau di tab Actions).
+# Branch "deploy" diuji oleh workflow Deploy, jadi tidak diikutkan di sini.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Make mvnw executable
+        run: chmod +x mvnw
+
+      - name: Build & test
+        run: ./mvnw -B verify
