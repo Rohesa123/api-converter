@@ -1,10 +1,9 @@
 # ============================================================================
 # REFERENSI FORMAT — OpenAPI 3.0.0
 #
-# Berkas ini hanya ACUAN struktur format. Seluruh data di bawah FIKTIF dan
-# tidak diambil dari folder example/. Ini menggambarkan bentuk output konverter
-# (Insomnia v5 -> OpenAPI 3.0) sekaligus input untuk arah sebaliknya
-# (OpenAPI 3.0 -> Insomnia v5).
+# Berkas ini hanya ACUAN struktur format. Seluruh data di bawah FIKTIF/bebas.
+# Menggambarkan bentuk output konverter (Insomnia v5 -> OpenAPI 3.0) sekaligus
+# input untuk arah sebaliknya (OpenAPI 3.0 -> Insomnia v5).
 #
 # Catatan: environment dibawa dua arah — sub-environment di-resolve menjadi
 # `servers`, dan seluruh variabel (termasuk token) disimpan di ekstensi

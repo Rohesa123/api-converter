@@ -5,8 +5,8 @@ Tujuannya: jadi acuan struktur ke depan — kalau ada **format baru**, taruh sat
 berkas contohnya di sini, lalu minta AI/developer **membaca folder ini** untuk
 memahami bentuk format sebelum menulis konverternya.
 
-> Semua data di berkas-berkas ini **fiktif** dan **tidak** diambil dari folder
-> `example/` (yang berisi berkas uji nyata).
+> Semua data di berkas-berkas ini **fiktif/bebas**, hanya untuk menggambarkan
+> struktur format.
 
 ## Isi katalog
 

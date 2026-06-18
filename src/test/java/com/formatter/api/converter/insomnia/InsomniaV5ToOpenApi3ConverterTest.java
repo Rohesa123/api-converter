@@ -17,8 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Fixture diambil dari folder {@code format/} (acuan yang ter-commit), BUKAN dari
- * {@code example/} yang di-gitignore — agar test tetap jalan di CI/GitHub Actions.
+ * Fixture diambil dari folder {@code format/} (acuan yang ter-commit) agar test
+ * tetap jalan di CI/GitHub Actions.
  */
 class InsomniaV5ToOpenApi3ConverterTest {
 

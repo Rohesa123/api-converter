@@ -8,7 +8,7 @@
 # Struktur collection/environments-nya identik dengan varian collection,
 # sehingga konverter memperlakukan keduanya sama.
 #
-# Seluruh data FIKTIF, bukan dari folder example/.
+# Seluruh data FIKTIF/bebas, hanya untuk acuan struktur.
 # ============================================================================
 type: spec.insomnia.rest/5.0
 schema_version: "5.1"

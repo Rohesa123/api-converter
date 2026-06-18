@@ -4,7 +4,6 @@ target/
 .idea/
 .mvn/wrapper/maven-wrapper.jar
 *.iml
-example/
 format/
 README.md
 HELP.md

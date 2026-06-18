@@ -43,7 +43,7 @@ Arsitektur dibuat **modular/extensible** — menambah pasangan format baru cukup
 
 ## 📁 Folder `format/` (katalog acuan)
 
-Katalog **referensi struktur** tiap format, memakai **data fiktif** (bukan dari `example/`). Lihat [`format/README.md`](format/README.md) untuk panduan menambah format baru.
+Katalog **referensi struktur** tiap format, memakai **data fiktif**. Lihat [`format/README.md`](format/README.md) untuk panduan menambah format baru.
 
 | Berkas | Format | `type` / penanda |
 | --- | --- | --- |
@@ -51,7 +51,7 @@ Katalog **referensi struktur** tiap format, memakai **data fiktif** (bukan dari 
 | [`format/insomnia-document-5.0.yaml`](format/insomnia-document-5.0.yaml) | Insomnia v5 — Design Document / API Spec | `spec.insomnia.rest/5.0` (punya blok `spec:`) |
 | [`format/openapi-3.0.yaml`](format/openapi-3.0.yaml) | OpenAPI 3.0.0 | `openapi: 3.0.0` |
 
-> Insomnia v5 punya dua varian (collection & document); keduanya berstruktur sama dan diperlakukan identik oleh konverter. Folder `example/` berisi file uji nyata; `format/` adalah template acuan berdata bebas.
+> Insomnia v5 punya dua varian (collection & document); keduanya berstruktur sama dan diperlakukan identik oleh konverter. Folder `format/` adalah template acuan berdata bebas.
 
 ---
 
@@ -119,7 +119,7 @@ Mengembalikan file hasil dengan header `Content-Disposition: attachment`.
 
 ```bash
 # Insomnia v5 -> OpenAPI 3.0
-curl -OJ -F "file=@example/Mitra.yaml" -F "target=openapi-3.0" -F "output=yaml" \
+curl -OJ -F "file=@format/insomnia-collection-5.0.yaml" -F "target=openapi-3.0" -F "output=yaml" \
   http://localhost:8080/api/convert
 
 # OpenAPI 3.0 -> Insomnia v5
@@ -131,7 +131,7 @@ curl -OJ -F "file=@format/openapi-3.0.yaml" -F "source=openapi-3.0" -F "target=i
 Konversi banyak file → satu ZIP. Sama seperti di atas, tetapi parameter file bernama `files` (boleh berkali-kali). File yang gagal dicatat di `_conversion-errors.txt` di dalam ZIP.
 
 ```bash
-curl -OJ -F "files=@example/Mitra.yaml" -F "files=@example/Va Guard.yaml" \
+curl -OJ -F "files=@format/insomnia-collection-5.0.yaml" -F "files=@format/insomnia-document-5.0.yaml" \
   http://localhost:8080/api/convert/batch
 ```
 
@@ -154,7 +154,6 @@ src/main/java/com/formatter/api
 
 src/main/resources/static                  # frontend (index.html, app.js, styles.css)
 format/                                     # contoh referensi tiap format (data fiktif)
-example/                                    # contoh file uji nyata
 ```
 
 ### Menambah format baru
@@ -174,7 +173,7 @@ export JAVA_HOME="/c/Program Files/Java/jdk-21"
 ./mvnw test
 ```
 
-Unit test memakai berkas di `format/` dan `example/` sebagai fixture: struktur OpenAPI, `requestBody` example, tags, pemetaan environment → servers, konversi balik OpenAPI → Insomnia, dan **round-trip** (Insomnia → OpenAPI → Insomnia).
+Unit test memakai berkas di `format/` sebagai fixture: struktur OpenAPI, `requestBody` example, tags, pemetaan environment → servers, konversi balik OpenAPI → Insomnia, dan **round-trip** (Insomnia → OpenAPI → Insomnia).
 
 ---
 

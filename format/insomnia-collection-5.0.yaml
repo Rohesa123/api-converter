@@ -6,8 +6,7 @@
 # yang bertipe spec.insomnia.rest/5.0). Varian "collection" TIDAK punya blok
 # `spec:`; selebihnya strukturnya sama.
 #
-# Berkas ini hanya ACUAN struktur format. Seluruh data di bawah FIKTIF dan
-# tidak diambil dari folder example/.
+# Berkas ini hanya ACUAN struktur format. Seluruh data di bawah FIKTIF/bebas.
 # ============================================================================
 type: collection.insomnia.rest/5.0
 schema_version: "5.1"
