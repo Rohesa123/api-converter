@@ -1,6 +1,15 @@
 # Format Converter
 
+[![CI](https://github.com/Rohesa123/api-converter/actions/workflows/ci.yml/badge.svg)](https://github.com/Rohesa123/api-converter/actions/workflows/ci.yml)
+[![Deploy](https://github.com/Rohesa123/api-converter/actions/workflows/deploy.yml/badge.svg)](https://github.com/Rohesa123/api-converter/actions/workflows/deploy.yml)
+[![Live Demo](https://img.shields.io/badge/demo-online-brightgreen)](https://api-converter-zbkr.onrender.com)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE)
+![Java](https://img.shields.io/badge/Java-21-orange)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5-6db33f)
+
 Aplikasi web + backend Java (Spring Boot) untuk mengonversi file spesifikasi/koleksi API antar-format. Anda mengimpor file lewat halaman web, proses konversi berjalan di server, lalu hasilnya bisa diunduh.
+
+🔗 **Demo:** https://api-converter-zbkr.onrender.com
 
 Konversi yang tersedia saat ini (**dua arah**):
 
