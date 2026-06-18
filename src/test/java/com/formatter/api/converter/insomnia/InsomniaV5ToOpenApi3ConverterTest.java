@@ -16,21 +16,26 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Fixture diambil dari folder {@code format/} (acuan yang ter-commit), BUKAN dari
+ * {@code example/} yang di-gitignore — agar test tetap jalan di CI/GitHub Actions.
+ */
 class InsomniaV5ToOpenApi3ConverterTest {
 
     private final InsomniaV5ToOpenApi3Converter converter = new InsomniaV5ToOpenApi3Converter();
     private final YAMLMapper yaml = new YAMLMapper();
 
-    private byte[] mitra() throws Exception {
-        return Files.readAllBytes(Path.of("example", "Mitra.yaml"));
-    }
-
-    private byte[] vaGuard() throws Exception {
-        return Files.readAllBytes(Path.of("example", "Va Guard.yaml"));
+    private byte[] collectionRef() throws Exception {
+        return Files.readAllBytes(Path.of("format", "insomnia-collection-5.0.yaml"));
     }
 
     private byte[] documentRef() throws Exception {
         return Files.readAllBytes(Path.of("format", "insomnia-document-5.0.yaml"));
+    }
+
+    @Test
+    void supportsInsomniaToOpenApi() {
+        assertTrue(converter.supports(SourceFormat.INSOMNIA_V5, TargetFormat.OPENAPI_3_0));
     }
 
     @Test
@@ -43,16 +48,11 @@ class InsomniaV5ToOpenApi3ConverterTest {
     }
 
     @Test
-    void supportsInsomniaToOpenApi() {
-        assertTrue(converter.supports(SourceFormat.INSOMNIA_V5, TargetFormat.OPENAPI_3_0));
-    }
-
-    @Test
     void convertsToValidOpenApiYaml() throws Exception {
-        ConversionResult result = converter.convert(mitra(), "Mitra.yaml", OutputType.YAML);
+        ConversionResult result = converter.convert(collectionRef(), "insomnia-collection-5.0.yaml", OutputType.YAML);
 
         String out = new String(result.content(), StandardCharsets.UTF_8);
-        assertTrue(out.startsWith("openapi: 3.0.0") || out.contains("openapi: 3.0.0"));
+        assertTrue(out.contains("openapi: 3.0.0"));
         assertTrue(result.filename().endsWith(".openapi.yaml"));
 
         JsonNode root = yaml.readTree(result.content());
@@ -65,7 +65,7 @@ class InsomniaV5ToOpenApi3ConverterTest {
 
     @Test
     void mapsBodyAsExampleAndTagsFromFolders() throws Exception {
-        ConversionResult result = converter.convert(mitra(), "Mitra.yaml", OutputType.YAML);
+        ConversionResult result = converter.convert(collectionRef(), "insomnia-collection-5.0.yaml", OutputType.YAML);
         JsonNode root = yaml.readTree(result.content());
         JsonNode paths = root.path("paths");
 
@@ -97,37 +97,36 @@ class InsomniaV5ToOpenApi3ConverterTest {
 
     @Test
     void carriesEnvironmentsIntoServersAndExtension() throws Exception {
-        ConversionResult result = converter.convert(vaGuard(), "Va Guard.yaml", OutputType.YAML);
+        ConversionResult result = converter.convert(collectionRef(), "insomnia-collection-5.0.yaml", OutputType.YAML);
         JsonNode root = yaml.readTree(result.content());
 
         // base_url tiap environment harus muncul sebagai server dengan resolved URL
         JsonNode servers = root.path("servers");
         assertTrue(servers.isArray() && servers.size() >= 2, "harus ada server per environment");
         boolean hasLocal = false;
-        boolean hasLive = false;
+        boolean hasProd = false;
         for (JsonNode s : servers) {
             String url = s.path("url").asText();
-            if (url.equals("http://localhost:8001")) hasLocal = true;
-            if (url.equals("http://117.54.11.82:8101")) hasLive = true;
+            if (url.equals("http://localhost:8080")) hasLocal = true;
+            if (url.equals("https://api.bookstore.example.com")) hasProd = true;
         }
-        assertTrue(hasLocal, "server local (base_url) harus terbawa");
-        assertTrue(hasLive, "server live (base_url) harus terbawa");
+        assertTrue(hasLocal, "server Local (base_url) harus terbawa");
+        assertTrue(hasProd, "server Production (base_url) harus terbawa");
 
         // seluruh variabel environment (termasuk token) disimpan di ekstensi
         JsonNode env = root.path("x-insomnia-environments");
         assertTrue(env.isObject(), "x-insomnia-environments harus ada");
-        assertTrue(env.path("local").path("uwowToken").asText().length() > 0,
+        assertTrue(env.path("Local").path("token").asText().length() > 0,
                 "token environment harus ikut tersimpan");
 
-        // path tidak boleh lagi mengandung template {{ _.base_url }}
-        assertFalse(result.toString().isEmpty());
-        assertTrue(root.path("paths").has("/va-guard-mobile/check-email"),
+        // path harus bersih dari prefix {{ _.base_url }}
+        assertTrue(root.path("paths").has("/books"),
                 "path harus bersih dari prefix base_url");
     }
 
     @Test
     void producesValidJsonOutput() throws Exception {
-        ConversionResult result = converter.convert(mitra(), "Mitra.yaml", OutputType.JSON);
+        ConversionResult result = converter.convert(collectionRef(), "insomnia-collection-5.0.yaml", OutputType.JSON);
         assertTrue(result.filename().endsWith(".openapi.json"));
         String out = new String(result.content(), StandardCharsets.UTF_8);
         assertFalse(out.isBlank());
